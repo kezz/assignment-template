@@ -10,17 +10,18 @@
 \usepackage{pdflscape} % provides \begin{landscape}
 \usepackage{amsmath} % standard maths package %
 
+\newcommand{\thedate}{XXXX}
 \newcommand{\matricnumber}{150004606}
 \newcommand{\assignment}{XXXX}
 
 \title{\assignment}
 \author{\matricnumber}
-\date{XXXX}
+\date{\thedate}
 
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{\assignment}
-\rhead{\matricnumber}
+\lhead{\matricnumber}
+\rhead{\thedate}
 \cfoot{Page \thepage\space of \pageref*{LastPage}}
 \renewcommand{\headrulewidth}{0pt}
 
