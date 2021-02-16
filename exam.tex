@@ -1,0 +1,118 @@
+% !TEX options=--shell-escape
+\documentclass{article}
+\usepackage[utf8]{inputenc} % text encoding %
+\usepackage[scaled]{helvet} % helvetica font %
+\usepackage[T1]{fontenc} % sets font encoding %
+\usepackage[document]{ragged2e} % adds ragged right alignment %
+\usepackage[a4paper, margin=2.5cm]{geometry} % page size control %
+\usepackage{fancyhdr} % header control %
+\usepackage{lastpage} % last page referencing %
+\usepackage{graphicx} % image and pdf embedding %
+\usepackage{enumitem} % layout control for enum, etc. %
+\usepackage{dirtytalk} % provides \say{} %
+\usepackage[normalem]{ulem} % provides \uline{} %
+\usepackage{pdflscape} % provides \begin{landscape}
+\usepackage{amsmath} % standard maths package %
+\usepackage{amssymb} % provides maths symbols %
+\usepackage[outputdir=out]{minted} % provides better syntax highlighting %
+\usepackage{csquotes} % typeset quotes according to language %
+\usepackage[dvipsnames]{xcolor} % provides better colour support%
+\usepackage{float} % precise float placement %
+\usepackage{wrapfig} % provides text wrapping around figures %
+\usepackage{hyperref} % provides ref links %
+\usepackage[nameinlink, noabbrev]{cleveref} % provides capitalised referencing links %
+\usepackage{tikz} % standard data visualisation library %
+\usepackage{subcaption} % multiple captions in one figure %
+\usepackage{changepage} % dynamic page layout modification %
+\usepackage[super]{nth} % provides \nth{2} for 2nd %
+\usepackage{makecell} % provides \makecell{} for newlines in table cells %
+\usepackage{svg} % provides \includesvg{} for svg graphics %
+\usepackage{enumitem} % allows for indiviual lables for enumerates %
+\usepackage{adjustbox} % provides support for images inside list items %
+\usepackage[english]{datetime2} % changes date format %
+
+% ensure we're using a normal paragraph indent in lists
+\setlist{  
+  listparindent=\parindent,
+  parsep=0pt,
+}
+
+% use helvetica and ragged right paragraph indents
+\renewcommand\familydefault{\sfdefault}
+\setlength{\RaggedRightParindent}{\parindent}
+
+% set date format
+\DTMsetdatestyle{iso}
+
+% tikz setup %
+\usetikzlibrary{}
+\newenvironment{tikzhere}[1]
+{%
+  \begin{figure}[H]
+  \centering
+  \vspace{-10pt}
+  \def\tikzherecaption{#1}
+  \begin{tikzpicture}
+}
+{%
+  \end{tikzpicture}
+  \caption{\tikzherecaption}%   
+  \label{tikz:\tikzherecaption}
+  \end{figure}
+}
+
+% setup front page %
+\newcommand{\thedate}{\today}
+\newcommand{\matricnumber}{150004606}
+\newcommand{\assignment}{XXXX}
+
+\title{\assignment}
+\author{\matricnumber}
+\date{\thedate}
+
+% graphics settings %
+\graphicspath{{./img/}}
+\svgpath{{./img/}}
+\svgsetup{inkscapepath=./out/svg-inkscape/}
+
+% define headers and footers %
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\thedate}
+\chead{\assignment}
+\rhead{\matricnumber}
+\cfoot{Page \thepage\space of~\pageref*{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+% set pdf title %
+\hypersetup{
+  pdftitle   = {\assignment}
+}
+  
+% code enviroment %
+\renewcommand{\listingscaption}{Program}
+\newcommand*{\listingautorefname}{Program}
+\newenvironment{snippet}[2]
+{%
+  \vspace{-5pt}
+  \VerbatimEnvironment
+  \begin{listing}[H]
+  \caption{\code{#2}}%
+  \label{code:#2}%
+  \begin{minted}{#1}%
+}
+{%
+  \end{minted}%
+  \vspace{-10pt}%
+  \end{listing}%
+  \vspace{-5pt}
+}
+
+% misc commands %
+\newcommand{\code}[1]{{\ttfamily#1}}
+\newcommand{\qcode}[1]{\say{\code{#1}}}
+\newcommand{\itemwithtitle}[2]{\item\textbf{#1}\\#2}
+
+\begin{document}
+
+\end{document}

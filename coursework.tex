@@ -1,0 +1,144 @@
+% !TEX options=--shell-escape
+\documentclass{article}
+\usepackage[utf8]{inputenc} % text encoding %
+\usepackage[a4paper, margin=1in]{geometry} % page size control %
+\usepackage{fancyhdr} % header control %
+\usepackage{lastpage} % last page referencing %
+\usepackage{graphicx} % image and pdf embedding %
+\usepackage{enumitem} % layout control for enum, etc. %
+\usepackage{dirtytalk} % provides \say{} %
+\usepackage[normalem]{ulem} % provides \uline{} %
+\usepackage{pdflscape} % provides \begin{landscape}
+\usepackage{amsmath} % standard maths package %
+\usepackage{amssymb} % provides maths symbols %
+\usepackage[outputdir=out]{minted} % provides better syntax highlighting %
+\usepackage{csquotes} % typeset quotes according to language %
+\usepackage[british]{babel} % bibliography backend %
+\usepackage[backend=biber, style=authoryear]{biblatex} % standard bibliography package %
+\usepackage[title, titletoc]{appendix} % provides appendix titling %
+\usepackage[dvipsnames]{xcolor} % provides better colour support%
+\usepackage{float} % precise float placement %
+\usepackage{wrapfig} % provides text wrapping around figures %
+\usepackage{hyperref} % provides ref links %
+\usepackage[nameinlink, noabbrev]{cleveref} % provides capitalised referencing links %
+\usepackage{tikz} % standard data visualisation library %
+\usepackage{subcaption} % multiple captions in one figure %
+\usepackage{changepage} % dynamic page layout modification %
+\usepackage[super]{nth} % provides \nth{2} for 2nd %
+\usepackage{makecell} % provides \makecell{} for newlines in table cells %
+\usepackage{svg} % provides \includesvg{} for svg graphics %
+
+% tikz setup %
+\usetikzlibrary{}
+\newenvironment{tikzhere}[1]
+{%
+  \begin{figure}[H]
+  \centering
+  \vspace{-10pt}
+  \def\tikzherecaption{#1}
+  \begin{tikzpicture}
+}
+{%
+  \end{tikzpicture}
+  \caption{\tikzherecaption}%   
+  \label{tikz:\tikzherecaption}
+  \end{figure}
+}
+
+% setup front page %
+\newcommand{\wordcount}{XXXX}
+\newcommand{\thedate}{XX/XX/20XX}
+\newcommand{\matricnumber}{150004606}
+\newcommand{\assignment}{XXX}
+
+\title{\assignment}
+\author{\matricnumber\\Word Count: \wordcount}
+\date{\thedate}
+
+% graphics settings %
+\graphicspath{{./img/}}
+\svgpath{{./img/}}
+\svgsetup{inkscapepath=./out/svg-inkscape/}
+
+% define headers and footers %
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\matricnumber}
+\rhead{\thedate}
+\cfoot{Page \thepage\space of~\pageref*{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+% hyperref colours %
+\newcommand\myshade{85}
+\colorlet{mylinkcolour}{violet}
+\colorlet{mycitecolour}{YellowOrange}
+\colorlet{myurlcolour}{Aquamarine}
+
+\hypersetup{
+  linkcolor  = mylinkcolour!\myshade!black,
+  filecolor  = myurlcolour!\myshade!black,
+  citecolor  = mycitecolour!\myshade!black,
+  urlcolor   = myurlcolour!\myshade!black,
+  colorlinks = true,
+  pdftitle   = {\assignment}
+}
+
+% biblatex setup %
+\addbibresource{bibliography.bib}
+\setlength\bibitemsep{0.5\baselineskip}
+\DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]{citetitle}{#1}
+\DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]{title}{#1} 
+\DeclareCiteCommand{\citetitle}
+{\boolfalse{citetracker}%
+  \boolfalse{pagetracker}%
+  \usebibmacro{prenote}}
+{\ifciteindex
+   {\indexfield{indextitle}}
+   {}%
+ \printtext[bibhyperref]{\printfield[citetitle]{labeltitle}}}
+{\multicitedelim}
+{\usebibmacro{postnote}}
+  
+% code enviroment %
+\renewcommand{\listingscaption}{Program}
+\newcommand*{\listingautorefname}{Program}
+\newenvironment{snippet}[2]
+{%
+  \vspace{-5pt}
+  \VerbatimEnvironment
+  \begin{listing}[H]
+  \caption{\code{#2}}%
+  \label{code:#2}%
+  \begin{minted}{#1}%
+}
+{%
+  \end{minted}%
+  \vspace{-10pt}%
+  \end{listing}%
+  \vspace{-5pt}
+}
+
+% misc commands %
+\newcommand{\code}[1]{{\ttfamily#1}}
+\newcommand{\qcode}[1]{\say{\code{#1}}}
+\newcommand{\itemwithtitle}[2]{\item\textbf{#1}\\#2}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\hypersetup{linkcolor = black}
+\tableofcontents
+\hypersetup{linkcolor = mylinkcolour!\myshade!black}
+
+\appendix
+\begin{appendices}
+  \nocite{*}
+  \section{Bibliography}
+  \subsection{Code Citations}
+  \printbibliography[heading=none, keyword=code]
+
+  \subsection{Academic Citations}
+  \printbibliography[heading=none, keyword=academic]
+\end{appendices}
+\end{document}
